@@ -5,6 +5,5 @@ RegisterCommand('prop',function(source, args, rawCommand)
     local playerCoords = GetEntityCoords(playerPed)
     local object = CreateObject(model, playerCoords.x, playerCoords.y, playerCoords.z, false, false, false)
     local objectPositionData = useGizmo(object, (args[2] and GetPedBoneIndex(playerPed, tonumber(args[2])) or 18905), args[3], args[4])
-    
-    print(json.encode(objectPositionData, { indent = true }))
+    print(objectPositionData)
 end)

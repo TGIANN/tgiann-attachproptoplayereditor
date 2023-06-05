@@ -3,6 +3,7 @@ local mode = "Translate"
 local extraZ = 1000.0
 local spawnedProp, pedBoneId = 0, 0
 local lastCoord = nil
+local position, rotation = vector3(0.0, 0.0, 0.0), vector3(0.0, 0.0, 0.0)
 
 local function toggleNuiFrame(bool)
     usingGizmo = bool
@@ -20,7 +21,8 @@ function useGizmo(handle, boneid, dict, anim)
     SetEntityCoords(playerPed, 0.0, 0.0, extraZ-1)
     SetEntityHeading(playerPed, 0.0)
     SetEntityRotation(pedBoneId, 0.0, 0.0, 0.0)
-    AttachEntityToEntity(spawnedProp, playerPed, pedBoneId, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
+    position, rotation = vector3(0.0, 0.0, 0.0), vector3(0.0, 0.0, 0.0)
+    AttachEntityToEntity(spawnedProp, playerPed, pedBoneId, position, rotation, true, true, false, true, 1, true)
 
     SendNUIMessage({
         action = 'setGizmoEntity',
@@ -46,22 +48,19 @@ function useGizmo(handle, boneid, dict, anim)
         if IsControlJustReleased(0, 44) then
             SetNuiFocus(true, true)
         end
+        DisableIdleCamera(true)
         Wait(0)
     end
 
-    local data = {
-        position = GetEntityCoords(spawnedProp) - vector3(0.0, 0.0, extraZ),
-        rotation = GetEntityRotation(spawnedProp)
-    }
     finish()
-    return data
+    return (extraZ-position.z)..", "..position.y..", "..position.x..", "..rotation.x..", "..rotation.y..", "..rotation.z
 end
 
 RegisterNUICallback('moveEntity', function(data, cb)
     local entity = data.handle
-    local position = data.position
-    local rotation = data.rotation
-    AttachEntityToEntity(entity, PlayerPedId(), pedBoneId, extraZ-position.z, position.y, position.x, rotation.x, rotation.y, rotation.z, true, true, false, true, 1, true)
+    position = data.position
+    rotation = data.rotation
+    AttachEntityToEntity(entity, PlayerPedId(), pedBoneId, extraZ-position.z, position.y, position.x, rotation.x, rotation.y, rotation.z, 1, 1, 0, 1, 0, 1)
     cb('ok')
 end)
 
