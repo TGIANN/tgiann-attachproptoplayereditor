@@ -4,6 +4,12 @@ RegisterCommand('prop',function(source, args, rawCommand)
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
     local object = CreateObject(model, playerCoords.x, playerCoords.y, playerCoords.z, false, false, false)
-    local objectPositionData = useGizmo(object, (args[2] and GetPedBoneIndex(playerPed, tonumber(args[2])) or 18905), args[3], args[4])
+    local bone = 18905
+    if args[2] and tonumber(args[2]) ~= nil then
+        bone = GetPedBoneIndex(playerPed, tonumber(args[2]))
+    elseif args[2] then
+        bone =  GetEntityBoneIndexByName(playerPed, args[2] )
+    end
+    local objectPositionData = useGizmo(object, bone, args[3], args[4])
     print(objectPositionData)
 end)
