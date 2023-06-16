@@ -138,7 +138,10 @@ function finish()
     end
     FreezeEntityPosition(PlayerPedId(), false)
     ClearPedTasks(PlayerPedId())
-    SetEntityCoords(PlayerPedId(), lastCoord)
+    if lastCoord ~= nil then
+        SetEntityCoords(PlayerPedId(), lastCoord)
+        lastCoord = nil
+    end
 end
 
 function taskPlayAnim(ped, dict, anim, flag)
