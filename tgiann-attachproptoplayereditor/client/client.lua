@@ -22,7 +22,7 @@ function useGizmo(handle, boneid, dict, anim)
     SetEntityHeading(playerPed, 0.0)
     SetEntityRotation(pedBoneId, 0.0, 0.0, 0.0)
     position, rotation = vector3(0.0, 0.0, 0.0), vector3(0.0, 0.0, 0.0)
-    AttachEntityToEntity(spawnedProp, playerPed, pedBoneId, position, rotation, true, true, false, true, 1, true)
+    AttachEntityToEntity(spawnedProp, playerPed, pedBoneId, position, rotation, true, true, false, true, 0, true)
 
     SendNUIMessage({
         action = 'setGizmoEntity',
