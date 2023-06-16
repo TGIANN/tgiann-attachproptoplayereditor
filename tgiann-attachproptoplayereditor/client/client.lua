@@ -53,7 +53,7 @@ function useGizmo(handle, boneid, dict, anim)
     end
 
     finish()
-    return (extraZ-position.z)..", "..position.y..", "..position.x..", "..rotation.x..", "..rotation.y..", "..rotation.z
+    return "AttachEntityToEntity(entity,PlayerPedId(),"..pedBoneId.." ,"..(extraZ-position.z)..", "..position.y..", "..position.x..", "..rotation.x..", "..rotation.y..", "..rotation.z..", 1, 1, 0, 1, 0, 1)"
 end
 
 RegisterNUICallback('moveEntity', function(data, cb)
