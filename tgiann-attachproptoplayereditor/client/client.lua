@@ -53,14 +53,17 @@ function useGizmo(handle, boneid, dict, anim)
     end
 
     finish()
-    return (extraZ-position.z)..", "..position.y..", "..position.x..", "..rotation.x..", "..rotation.y..", "..rotation.z
+    return {
+        "AttachEntityToEntity(entity, PlayerPedId(), "..pedBoneId..", "..(extraZ-position.z)..", "..position.y..", "..position.x..", "..rotation.x..", "..rotation.y..", "..rotation.z..", true, true, false, true, 1, true)",
+        (extraZ-position.z)..", "..position.y..", "..position.x..", "..rotation.x..", "..rotation.y..", "..rotation.z
+    }
 end
 
 RegisterNUICallback('moveEntity', function(data, cb)
     local entity = data.handle
     position = data.position
     rotation = data.rotation
-    AttachEntityToEntity(entity, PlayerPedId(), pedBoneId, extraZ-position.z, position.y, position.x, rotation.x, rotation.y, rotation.z, 1, 1, 0, 1, 0, 1)
+    AttachEntityToEntity(entity, PlayerPedId(), pedBoneId, extraZ-position.z, position.y, position.x, rotation.x, rotation.y, rotation.z, true, true, false, true, 1, true) --Same attach settings as dp emote and rp emotes
     cb('ok')
 end)
 
@@ -136,9 +139,13 @@ function finish()
     if DoesEntityExist(spawnedProp) then
         DeleteEntity(spawnedProp)
     end
-    FreezeEntityPosition(PlayerPedId(), false)
-    ClearPedTasks(PlayerPedId())
-    SetEntityCoords(PlayerPedId(), lastCoord)
+    local playerPed = PlayerPedId()
+    FreezeEntityPosition(playerPed, false)
+    ClearPedTasks(playerPed)
+    if lastCoord then
+        SetEntityCoords(playerPed, lastCoord)
+        lastCoord = nil
+    end
 end
 
 function taskPlayAnim(ped, dict, anim, flag)
