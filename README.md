@@ -6,3 +6,5 @@ Credit: https://github.com/Demigod916/object_gizmo & https://github.com/dolutatt
 `/prop <model*> <boneID*> <animDictionary?> <animationName?>`
 
 https://www.youtube.com/watch?v=LsRLwj2pAS0
+
+For more fivem scripts; https://tgiann.tebex.io/category/1768400
